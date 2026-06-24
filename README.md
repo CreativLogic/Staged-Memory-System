@@ -87,7 +87,9 @@ Before creating anything, understand the loading model. This is the foundation:
 | 3 | `_config/`, `_shared/`, `resources/` | Rules, style, identity | Selectively per task | 200 lines |
 | 4 | `databases/`, `stages/*/output/` | Working data | Selectively per task | No limit |
 
-**The golden rule:** Load a layer. Check if you have enough. If yes, stop. Every unnecessary token dilutes attention and degrades performance.
+### The golden rule:
+Load a layer. Check if you have enough. **If yes, stop.** 
+Every unnecessary token dilutes attention and degrades performance.
 
 ---
 

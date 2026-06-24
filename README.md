@@ -295,6 +295,94 @@ Load only what you need for the current task."
 
 ---
 
+## Keeping Files Lean — The Reference Pattern
+
+The most common mistake: dumping everything into SOUL/CLAUDE files. Long system prompts dilute attention. The model scans past irrelevant content, missing what matters. Every unnecessary token costs accuracy, speed, and money.
+
+### The Rule
+
+**SOUL/CLAUDE files are indexes, not encyclopedias.** They contain identity, hard rules, and reference pointers. Everything else lives in its own file and is loaded on demand.
+
+### What Belongs in SOUL/CLAUDE (Layer 0)
+
+- Agent identity — who you are, what you do
+- Hard rules — the 5-8 things you must never violate
+- Reference map — a table pointing to where detailed instructions live
+- The five-layer loading protocol
+
+**Target: under 60 lines.**
+
+### What Does NOT Belong in SOUL/CLAUDE
+
+- Detailed methodology or frameworks → goes in `resources/` or `_shared/rules/`
+- Complete workflow instructions → goes in stage CONTEXT.md files
+- Lists of skills, models, or tools → goes in `CONTEXT.md` or a reference file
+- Configuration details → goes in config files
+- Personal preferences longer than one line → goes in `USER-IDENTITY.md`
+
+### The Reference Pattern
+
+Instead of embedding instructions, point to them:
+
+```markdown
+## References (load on demand)
+
+| When | Where |
+|------|-------|
+| Writing copy | `_shared/rules/style-guide.md` |
+| Outreach emails | `stages/Outreach/references/email-rules.md` |
+| User preferences | `resources/USER-IDENTITY.md` |
+| Full system docs | `resources/REFERENCE-MANUAL.md` |
+```
+
+### Example: Bad vs Good SOUL
+
+**Bad (bloated — 200+ lines):**
+```markdown
+# Agent Soul
+I am a copywriter. Here are the 47 rules of copywriting:
+1. Never use passive voice because...
+2. Always start headlines with numbers because...
+3. The AIDA framework works by first grabbing Attention through...
+[... 180 more lines of methodology]
+```
+
+**Good (lean — 50 lines, references methodology):**
+```markdown
+# Agent Soul
+I am a copywriter. Every word measured by one standard: does it move the reader?
+
+## References
+| When | Where |
+|------|-------|
+| Before writing any copy | `_shared/rules/copywriting-guide.md` |
+| Client-facing content | `_config/branding.md` |
+
+## Hard Rules
+- Never write without reading the guide first
+- Research before writing — research IS the work
+- One CTA, one action, one outcome
+```
+
+### Creating New Agents
+
+1. **Start with the template:** Copy `templates/workspace-template/` as your agent's home
+2. **Write SOUL first:** Identity + hard rules + reference map. Under 60 lines.
+3. **Write CONTEXT second:** What stages exist, which to run for what task. Under 30 lines.
+4. **Move methodology to references:** Put detailed instructions in `_shared/rules/` or stage `references/` folders
+5. **Test the loading:** Can the agent find what it needs in 2 layers or less? If not, restructure.
+
+### The Bloat Test
+
+After writing any agent file, ask:
+- "Can I remove this line without the agent losing something critical?"
+- "Does this instruction belong in a reference file instead?"
+- "Would an agent still know what to do if they only read the first 20 lines?"
+
+If any answer is yes, move content to a reference file and add a pointer.
+
+---
+
 ## Extending
 
 ### Adding a New Stage

@@ -2,6 +2,7 @@
 
 An internal folder structure with semantic search — no external API calls. Full control of your data with fast recall. Set up in minutes.
 
+
 ---
 
 ## What It Is
@@ -16,9 +17,39 @@ A filesystem-based memory and orchestration system for AI agents. Instead of rel
 - **Glass-box** — every file is human-readable and editable
 - **Agent-agnostic** — works with Hermes, Claude Code, Cursor, or any agent that reads files
 
+
+This is my personal system that I've compiled from a different frameworks and tools I have found the most effective. The result?
+My agents are able to recall memories faster and more accurate than ever before without latency. I spent weeks adding the latest trending repos and
+studying what the latest creators are telling everybody to do and I can tell you with 100% honesty, most of it is bs. Either they're making content based on
+what is trending for the clicks or they are using tools and methods that cost more than the average person is willing to spend on a reliable memory system. 
+
+Your agent's memory system shouldn't cost anywhere near what you are paying a month for the agent itself. That's why I built this. I'm tired of subscriptions.
+It's not flashy. It doesn't have a whole lot of flair or "wow" factors. It just works. Exceptionally well.
+
+**Let me briefly break it down:**
+
+A local filesystem read on NVMe/SSD is typically 10-100 microseconds
+- An API call (HTTPS roundtrip + server processing) is typically 50-500 milliseconds
+- That's roughly 500-5000x faster for filesystem reads vs API calls.
+- Over many operations this compounds significantly.
+
+Tools like Honcho have a limited free tier and then you pay for api calls at the additional expense of not having control of your data.
+This is 100% Free, easy to setup and gives you 100% control of your data, with faster speed and accuracy.
+
+
+
 ---
 
 ## Quick Start
+
+You can either create the workspace first and then clone this repo into it or you can add the command to your initial git clone prompt.
+
+### Method 1 Creating the workspace
+```bash
+mkdir sms-workspace
+cd sms-workspace
+git clone https://github.com/CreativLogic/Staged-Memory-System.git
+```
 
 ### 1. Clone
 

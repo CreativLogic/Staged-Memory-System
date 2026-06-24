@@ -1,13 +1,13 @@
 # Staged Memory System
 
-An internal folder structure with semantic search — no external API calls. Full control of your data with fast recall. Set up in minutes.
+The SMS framework is an internal folder structure with semantic search that offers a built-in context mode and provides you with faster memory recall, without giving up control of your data to external companies. — no external API calls. Full control of your data with fast recall. 5-minutes to setup.
 
 
 ---
 
 ## What It Is
 
-A filesystem-based memory and orchestration system for AI agents. Instead of relying on external APIs for context, memory, and workflow management, the Staged Memory System uses plain markdown files organized in a layered folder structure. Your files ARE your memory. Your folders ARE your workflow.
+A filesystem-based memory and orchestration system for AI agents. Instead of relying on external APIs for context, memory, and workflow management, SMS uses plain markdown files organized in a layered folder structure with instant memory recall and the ability to easily search or query your data. Your files ARE your memory. Your folders ARE your workflow.
 
 **Key properties:**
 - **Zero API dependencies for core memory** — no external services, no vendor lock-in
@@ -20,12 +20,17 @@ A filesystem-based memory and orchestration system for AI agents. Instead of rel
 
 This is my personal system that I've compiled from compiling different frameworks and tools I found to be the most effective for me. 
 The result?
-My agents are able to recall memories faster and more accurate than ever before without latency. 
-I spent weeks adding the latest trending repos and studying what the latest creators are telling everybody to do and I can tell you with 100% honesty, 
-most of it is bs. Either they're just recommending trendy repos or tools to make content or they are using tools that cost more than the average person is willing to spend on a reliable memory system. 
+My entire AIOS became portable and eliminated the risk of being one update away from breaking. It also changes what it means to use agents entirely. 
+SMS becomes less dependant on the model I am using, while produced better results at a level of consistency that I haven't seen before. 
+This is especially helpful if you work with clients or teams and need to access eachothers folders or files. 
+The portability alone is incredible, and dramatically cuts or lowers your token costs, and doesn't rely on a bunch of tool calls or plugins. 
 
-Your agent's memory system shouldn't cost anywhere near what you are paying a month for the agent itself. That's why I built this. I'm tired of subscriptions.
-It's not flashy. It doesn't have a whole lot of flair or "wow" factors. It just works. Exceptionally well.
+So give it a try. Spend the five minutes setting it up.
+Take another 15-20 to really understand it and I promise you that once you see it, you can't unsee it.
+
+I simply wanted control over my own data without having to run everything completely locally and without adding another monthly subscription fee to my already long list of subscriptions. 
+That's why I built this.
+It's not flashy and doesn't have any "wow" factors. It just works. Exceptionally well, actually.
 
 **Let me briefly break it down:**
 

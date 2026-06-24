@@ -40,71 +40,357 @@ This is 100% Free, easy to setup and gives you 100% control of your data, with f
 
 ---
 
-## Quick Start
+## Quick Start — Step by Step
 
-You can either create the workspace first and then clone this repo into it or you can add the command to your initial git clone prompt.
+You have two options to get started. Pick one.
 
-### Method 1 Creating the workspace
-```bash
-mkdir sms-workspace
-cd sms-workspace
-git clone https://github.com/CreativLogic/Staged-Memory-System.git
-```
-
-### 1. Clone
+### Option A: Clone as Your Workspace
 
 ```bash
 git clone https://github.com/CreativLogic/Staged-Memory-System.git ~/sms-workspace
 cd ~/sms-workspace
 ```
 
-### 2. Understand the Structure
+### Option B: Clone into an Existing Folder
 
-Read through the folder map below. Every folder has a purpose. Every file has a home.
+```bash
+mkdir ~/sms-workspace
+cd ~/sms-workspace
+git clone https://github.com/CreativLogic/Staged-Memory-System.git .
+```
 
-### 3. Point Your Agent Here
+After either option, you should see this structure:
+```
+sms-workspace/
+├── CLAUDE.md       ← You need to create this (see Step 2)
+├── CONTEXT.md      ← You need to create this (see Step 2)
+├── _config/
+├── _shared/
+├── resources/
+├── stages/
+├── databases/
+├── templates/
+└── README.md
+```
 
-Tell your agent:
+---
+
+### Step 1: Understand the Five Layers
+
+Before creating anything, understand the loading model. This is the foundation:
+
+| Layer | File | Job | When Loaded | Max Size |
+|-------|------|-----|-------------|----------|
+| 0 | `CLAUDE.md` | Agent identity + hard rules | Every session start | 60 lines |
+| 1 | `CONTEXT.md` | Task routing | After Layer 0 | 30 lines |
+| 2 | `stages/*/CONTEXT.md` | Stage contract | When executing that stage | 80 lines |
+| 3 | `_config/`, `_shared/`, `resources/` | Rules, style, identity | Selectively per task | 200 lines |
+| 4 | `databases/`, `stages/*/output/` | Working data | Selectively per task | No limit |
+
+**The golden rule:** Load a layer. Check if you have enough. If yes, stop. Every unnecessary token dilutes attention and degrades performance.
+
+---
+
+### Step 2: Create Your Agent Files
+
+Create the two required files for your workspace.
+
+**CLAUDE.md (Layer 0) — under 60 lines:**
+
+```bash
+cat > CLAUDE.md << 'EOF'
+# Your Agent Name
+
+<!-- REFERENCE: resources/REFERENCE-MANUAL.md -->
+
+I am [agent name]. My purpose is [one sentence].
+
+## Five-Layer Protocol
+
+| Layer | File | When |
+|-------|------|------|
+| 0 | CLAUDE.md (this file) | Every session start |
+| 1 | CONTEXT.md | After Layer 0 |
+| 2 | stages/*/CONTEXT.md | When executing a stage |
+| 3 | _config/, _shared/, resources/ | When rules needed |
+| 4 | databases/, stages/*/output/ | When data needed |
+
+## References (load on demand)
+
+| When | Where |
+|------|-------|
+| [Task type] | `[file path]` |
+| User identity | `resources/USER-IDENTITY.md` |
+| Full system docs | `resources/REFERENCE-MANUAL.md` |
+
+## Hard Rules
+
+- Filesystem first — read before computing or asking
+- Never ask for context that exists in a file
+- Load a layer, check if you have enough, stop
+- Stage folders: capital letters, no numbers
+- Never delete without backup to archives/
+EOF
+```
+
+**CONTEXT.md (Layer 1) — under 30 lines:**
+
+```bash
+cat > CONTEXT.md << 'EOF'
+# Task Router
+
+## Pipeline
+
+| Stage | Status | Output |
+|-------|--------|--------|
+| [StageName] | Ready | stages/[StageName]/output/ |
+
+## Routing
+
+| Task | Stage |
+|------|-------|
+| [description] | stages/[StageName]/CONTEXT.md |
+
+## Stage Order
+
+1. [First stage] → 2. [Second stage]
+
+Order is defined here, not in folder names.
+EOF
+```
+
+**Verification:** Both files created. Your agent now has a Layer 0 identity and Layer 1 router.
+
+---
+
+### Step 3: Create Your First Stage
+
+Each stage is a named folder under `stages/`. Create one now:
+
+```bash
+mkdir -p stages/MyFirstStage/{references,output}
+
+cat > stages/MyFirstStage/CONTEXT.md << 'EOF'
+# MyFirstStage — [Purpose]
+
+## Inputs
+| Source | File | Section | Why |
+|--------|------|---------|-----|
+| Config | ../../_config/identity.md | Relevant section | Context |
+
+## Process
+1. Read inputs
+2. Execute task
+3. Write output to output/
+4. Run checks before saving
+
+## Outputs
+| Artifact | Location | Format |
+|----------|----------|--------|
+| Result | output/[name].md | Markdown |
+EOF
+```
+
+**Verification:** `ls stages/MyFirstStage/` shows `CONTEXT.md`, `references/`, `output/`.
+
+---
+
+### Step 4: Add Your Reference Files
+
+Populate the Layer 3 files — these are loaded on demand, not every session.
+
+```bash
+# User identity (who the user is, preferences, don't-dos)
+cat > resources/USER-IDENTITY.md << 'EOF'
+# User Identity
+
+## Who
+[Name, role, background]
+
+## Preferences
+- [Communication preference]
+- [Work style]
+
+## Don't-Dos
+- [Thing to never do]
+EOF
+
+# Brand/config (if applicable)
+cat > _config/identity.md << 'EOF'
+# Project Identity
+
+## What
+[Project description]
+
+## Target
+[Who it's for]
+EOF
+```
+
+**Verification:** Files exist in `resources/` and `_config/`. These won't bloat your agent prompt — they're only loaded when a task needs them.
+
+---
+
+### Step 5: Point Your Agent Here
+
+Tell your agent to use this workspace. The exact method depends on your platform:
+
+**Hermes Agent:**
+```bash
+# Set as working directory in your agent config or session
+cd ~/sms-workspace
+```
+
+**Claude Code:**
+Open the folder in Claude Code. It reads CLAUDE.md automatically on session start.
+
+**Cursor / VS Code:**
+Open the folder. The AI reads CLAUDE.md from the workspace root.
+
+**Any Agent That Reads Files:**
 ```
 Your workspace is ~/sms-workspace.
 Read CLAUDE.md first.
-Follow the layered loading protocol.
+Follow the five-layer loading protocol.
 All context lives in files — read before computing.
+Never load everything at once.
 ```
 
-### 4. Set Up GBrain (Optional — for Semantic Search)
+**Verification:** Start a session with your agent. It should read CLAUDE.md, then CONTEXT.md, then route to your stage.
+
+---
+
+### Step 6: Create Your Persistent Memory (Recommended)
+
+This file accumulates knowledge across sessions. All agents reference it.
 
 ```bash
-# Install GBrain
+cat > resources/PERSISTENT-MEMORY.md << 'EOF'
+# Persistent Memory — Cross-Session Knowledge
+
+## Preferences (accumulated)
+- [Fact] | Source: [date]
+
+## Decisions Made
+- [Decision] | Context: [why] | Date: [when]
+
+## Corrections (mistakes to never repeat)
+- [Correction] | Lesson: [what to do instead] | Date: [when]
+
+## Active Projects
+- [Project] | Status: [state]
+EOF
+```
+
+**Verification:** File created. At session end, update it with new learnings.
+
+---
+
+### Step 7: Set Up GBrain for Semantic Search (Recommended)
+
+GBrain indexes all workspace content and provides semantic search — finding facts by meaning, not just keywords. Runs entirely local, no API needed.
+
+```bash
+# 1. Install Bun (required by GBrain)
 curl -fsSL https://bun.sh/install | bash
+# Restart your terminal or source your profile after install
+
+# 2. Install GBrain
 bun install -g github:garrytan/gbrain
 
-# Initialize with local embeddings (no API needed)
+# 3. Initialize brain with local embeddings
 gbrain init --pglite --embedding-model all-MiniLM-L6-v2
+# This creates ~/.gbrain/brain.pglite — a local Postgres database
+# The embedding model is ~80MB, downloaded once on first use
 
-# Import workspace
+# 4. Import your workspace
 gbrain import ~/sms-workspace
+# This syncs all markdown files into the brain
+# Expect: "Import complete: N pages imported, M chunks created"
 
-# Generate embeddings
+# 5. Generate embeddings
 gbrain embed --stale
+# This may take 2-5 minutes on first run depending on workspace size
+# Subsequent runs only re-embed changed files
 
-# Search semantically
-gbrain query "your search terms"
+# 6. Test semantic search
+gbrain query "what is the workspace structure"
+# Should return relevant sections from your workspace files
+# Ranked by relevance, not just keyword match
 ```
 
-### 5. Set Up Context Mode (Optional — for Context Compression)
+**Verification:** Run `gbrain status` — should show pages imported and embed percentage. Run `gbrain query "test"` — should return results.
+
+**Troubleshooting:**
+- If `gbrain` not found: restart terminal or run `source ~/.bashrc`
+- If embed fails: ensure `sentence-transformers` is installed: `pip install sentence-transformers`
+- If import is slow: first run indexes everything, subsequent runs are incremental
+- If you prefer keyword-only search (no embeddings): `gbrain init --pglite --no-embedding` and skip step 5
+
+---
+
+### Step 8: Set Up Context Mode for Compression (Recommended)
+
+Keeps raw tool output out of your agent's context window. Sandbox execution means megabytes of data become kilobytes.
 
 ```bash
+# 1. Install globally
 npm install -g context-mode
+
+# 2. Verify installation
+context-mode --version
+# Should output: 1.0.x
+
+# 3. Add to your agent's MCP config
+# For Hermes (~/.hermes/config.yaml):
 ```
 
-Add to your agent's MCP config:
 ```yaml
 mcp_servers:
   context-mode:
     command: context-mode
     enabled: true
 ```
+
+```bash
+# For Claude Code: install as a plugin
+# /plugin marketplace add mksglu/context-mode
+# /plugin install context-mode@context-mode
+
+# 4. Restart your agent
+# The following tools become available:
+# ctx_execute — run code in sandbox, only stdout enters context
+# ctx_search — FTS5 search with BM25 ranking
+# ctx_batch_execute — parallel commands with auto-indexing
+# ctx_fetch_and_index — web content, raw HTML never enters context
+# ctx_index — store content for later search
+# ctx_stats — context consumption statistics
+```
+
+**Verification:** Run `ctx_doctor` slash command or check agent tool list — should show context-mode tools. Run `ctx_stats` to see context savings.
+
+**Troubleshooting:**
+- If tools don't appear: restart your agent completely
+- If `command not found`: ensure npm global bin is in PATH (`export PATH="$HOME/.npm-global/bin:$PATH"`)
+- If MCP fails to connect: check the command path with `which context-mode`
+- For WSL users: you may need to add `--no-sandbox` to the MCP command args
+
+---
+
+### Step 9: Run Your First Full Cycle
+
+Test the entire system end-to-end:
+
+1. **Start a session** with your agent pointed at the workspace
+2. **Agent reads** CLAUDE.md → CONTEXT.md → routes to a stage
+3. **Agent executes** the stage, writing output to `stages/*/output/`
+4. **Review the output** — open the output file, edit if needed
+5. **Run the next stage** — it picks up your edited output
+6. **End session** — update PERSISTENT-MEMORY.md with learnings
+7. **Run GBrain embed** — `gbrain embed --stale` to index new content
+8. **Search** — `gbrain query "session topic"` to verify recall
+
+**Expected outcome:** Your agent navigates the workspace without prompting. Context stays lean. Memory persists across sessions. Search finds relevant past content.
 
 ---
 

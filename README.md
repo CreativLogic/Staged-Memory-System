@@ -18,8 +18,8 @@ A filesystem-based memory and orchestration system for AI agents. Instead of rel
 - **Agent-agnostic** — works with Hermes, Claude Code, Cursor, or any agent that reads files
 
 
-I'm Vinnie and I am just a regular guy who geeks out on AI in between running a business and being a dad to 3 boys. After trying a million and one different systems, tools or frameworks...I was broke. g
-Just kidding. But i was seriously mentally exhausted and increasingly frustrated. I hated being dependant on the model providers. The memory providers. The api providers. And everything else. It feels like endless costs for things I cant even see or hold in my hand. So I created this. 
+I'm Vinnie and I am just a regular guy who geeks out on AI in between running a business and being a dad to 3 boys. After trying a million and one different systems, tools or frameworks...I was broke.
+Just kidding. But i was seriously mentally exhausted and increasingly frustrated. I hated feeling like I didn't own anything of what I was using or building on a daily basis. Everything belonged to the wizards behind the curtains. The model providers, api providers, memory providers, etc. It felt like a converyor belt of endless costs for things I couldn't even see or hold in my hand. So I created this. It doesn't take away all of those costs but it gives me the control and peace of mind I need.
 
 My entire AIOS became portable and eliminated the risk of being one update away from breaking. It also changes what it means to use agents entirely. 
 SMS becomes less dependant on the model I am using, while produced better results at a level of consistency that I haven't seen before. 

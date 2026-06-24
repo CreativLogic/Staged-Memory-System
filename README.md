@@ -23,13 +23,15 @@ Just kidding. But i was seriously mentally exhausted and increasingly frustrated
 
 It felt like I was on a conveyor belt full of endless costs for things I couldn't even see or hold in my hand. So I created this. It doesn't take away all of those costs but it gives me the control and peace of mind I need.
 
-My entire AIOS became portable and eliminated the risk of being one update away from breaking. It also changes what it means to use agents entirely. 
-SMS becomes less dependant on the model I am using, while produced better results at a level of consistency that I haven't seen before. 
+For starters, all of my data became portable. SMS also eliminated the risk of being one update away from everything breaking. I'm sure many of you have been there just as I have. Claude or OpenAI updates something and causes your stuff to either break or becomes obsolete. 
+
+SMS prevents that from happening because it doesn't rely on the model itself. 
+SMS provides a fast memory system that makes it easy for any model to instantly pick up and get to work without skipping a beat. 
 This is especially helpful if you work with clients or teams and need to access eachothers folders or files. 
 The portability alone is incredible, and dramatically cuts or lowers your token costs, and doesn't rely on a bunch of tool calls or plugins. 
 
 So give it a try. Spend the five minutes setting it up.
-Take another 15-20 to really understand it and I promise you that once you see it, you can't unsee it.
+PRO TIP: Take another 15-20 to really understand it and I promise you that once you see it, you can't unsee it.
 
 I simply wanted control over my own data without having to run everything completely locally and without adding another monthly subscription fee to my already long list of subscriptions. 
 That's why I built this.

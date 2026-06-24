@@ -18,10 +18,11 @@ A filesystem-based memory and orchestration system for AI agents. Instead of rel
 - **Agent-agnostic** — works with Hermes, Claude Code, Cursor, or any agent that reads files
 
 
-This is my personal system that I've compiled from a different frameworks and tools I have found the most effective. The result?
-My agents are able to recall memories faster and more accurate than ever before without latency. I spent weeks adding the latest trending repos and
-studying what the latest creators are telling everybody to do and I can tell you with 100% honesty, most of it is bs. Either they're making content based on
-what is trending for the clicks or they are using tools and methods that cost more than the average person is willing to spend on a reliable memory system. 
+This is my personal system that I've compiled from compiling different frameworks and tools I found to be the most effective for me. 
+The result?
+My agents are able to recall memories faster and more accurate than ever before without latency. 
+I spent weeks adding the latest trending repos and studying what the latest creators are telling everybody to do and I can tell you with 100% honesty, 
+most of it is bs. Either they're just recommending trendy repos or tools to make content or they are using tools that cost more than the average person is willing to spend on a reliable memory system. 
 
 Your agent's memory system shouldn't cost anywhere near what you are paying a month for the agent itself. That's why I built this. I'm tired of subscriptions.
 It's not flashy. It doesn't have a whole lot of flair or "wow" factors. It just works. Exceptionally well.

@@ -753,4 +753,4 @@ cp -r templates/workspace-template/ workspaces/NewWorkspace/
 
 ## License
 
-MIT — see LICENSE file.
+GPL-V2 — see LICENSE file.
